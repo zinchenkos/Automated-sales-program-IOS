@@ -1,0 +1,3 @@
+Address already in use:
+
+```lsof -i :  Port``` -> ```sudo kill -9 PID```

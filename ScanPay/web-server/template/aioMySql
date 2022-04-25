@@ -1,0 +1,51 @@
+import asyncio
+import aiomysql
+
+
+async def test_example(loop):
+    conn = await aiomysql.connect(host='127.0.0.1', port=3306,
+                                  user='root', password='', db='mysql',
+                                  loop=loop)
+    sql = "SELECT 1 `id`, JSON_OBJECT('key1', 1, 'key2', 'abc') obj"
+    async with conn.cursor(aiomysql.cursors.DeserializationCursor,
+                           aiomysql.cursors.DictCursor) as cur:
+        await cur.execute(sql)
+        print(cur.description)
+        r = await cur.fetchall()
+        print(r)
+    conn.close()
+
+
+ def search_barcode(self, barcode):
+        conn = await aiomysql.connect(host='127.0.0.1', port=3306,
+                                  user='root', password='', db='mysql',
+                                  loop=loop)
+
+        data_dict = None
+        self.log.debug("Trying to find barcode : {barcode}", extra={'barcode' : barcode})
+        try:
+            with with conn.cursor(aiomysql.cursors.DeserializationCursor,
+                           aiomysql.cursors.DictCursor) as cursor:
+                sql = "SELECT id_product_value,name,bordercode,price,photo,points  from product_new1.product_value where  bordercode =%s"
+                cursor.execute(sql, (barcode))
+
+                rv =  await cursor.fetchall()
+
+                if  await cursor.rowcount > 1:
+                    raise self.TooManyObjects
+
+                elif  cursor.rowcount == 0:
+                    raise self.DoesNotExist
+
+
+                else:
+                    data_json = json.dumps(rv, ensure_ascii=False, separators=(',', ': '))
+                    data_json = json.loads(data_json, encoding='UTF-8')
+                    for data in data_json:
+                        data_dict = data
+                   
+
+        except:
+            self.log.exception('Error on SELECT product by barcode : {barcode}',extra={'barcode' : barcode})
+        return data_dict
+
