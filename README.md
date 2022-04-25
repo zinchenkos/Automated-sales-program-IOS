@@ -1,15 +1,14 @@
-## Server
 
 ![ScanPay](Img1.png)
 
 ```
-Server-based on aiohttp lib
+With ScanPay you can buy product in couple of steps, you just need to scan a barcode of product, find it in your app and then pay. In this version, a scanner, a server part and an IOS App interface were implemented (there is also version with goods accounting on Java, check my repository "Automated-sales-program"). Payment system wasn't conneted. Server is based on aiohttp lib.
 
 ```
 ___
-## Functional :
+## Functionality:
 
-- Response to user requests :  
+- Response to user requests:  
 ```
         - registration 
         - authorization
@@ -19,7 +18,7 @@ ___
         - add new item to database
 ```
 - Unique token generation
-- Working with database : 
+- Working with database: 
 ```
         - conect 
         - requests to database
